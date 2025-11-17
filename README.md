@@ -1,34 +1,36 @@
-# Skynet API Builder (React + TS)
+# Skynet API Builder
 
-Quick portal to browse Skynet endpoints, fill parameters, and generate YAML/JSON request bodies.
+A React + TypeScript portal to browse Skynet endpoints, fill parameters, and generate YAML request bodies.
 
-## Setup
+## Quick Start
 
 ```bash
 npm install
-# Already good to go: src/data/skynetSpec.json is pre-generated from your doc.
-# Optional (only if the upstream doc changes):
-npm run build-spec   # parses /Users/DT232381/Desktop/skynet-docs/network_api_docs.md into src/data/skynetSpec.json
-
 npm run dev          # start the UI
+# Optional: regenerate spec if doc changes
+npm run build-spec   # parses /Users/DT232381/Desktop/skynet-docs/network_api_docs.md into src/data/skynetSpec.json
 ```
 
-> Note: Keep the `build-spec` script handy for future updates. If you later run `/init` or pull fresh docs, rerun `npm run build-spec` to refresh `src/data/skynetSpec.json` so the sidebar stays in sync with the latest APIs.
+## How It Works
+- Endpoints are preloaded from the Skynet doc (spec JSON committed); build-spec only needed when the doc updates.
+- Required fields prefill from doc examples; optional fields start empty. `sdn_version` defaults to 2 unless the doc shows 1/1.0.
+- GET/DELETE params render under `query:`; POST/PUT under `body:`.
+- Copy YAML uses a clipboard fallback for broader browser support.
+- Optional-fields toggle appears only when an endpoint has optional params.
 
-## Current behavior (/init snapshot)
-- All Skynet endpoints from your doc are preloaded (no need to run build-spec unless docs change).
-- Forms: required fields are prefilled from doc examples; optional fields start empty. `sdn_version` defaults to **2 (SDN2)** unless the doc explicitly shows 1/1.0.
-- GET/DELETE params are emitted under `query:`, POST/PUT under `body:`.
-- Copy YAML button uses a fallback clipboard method (works even without `navigator.clipboard`).
-- Optional fields toggle only appears when an endpoint actually has optional params.
+## Usage Tips
+- Use the search box and dropdown to pick an endpoint, fill required fields, optionally reveal optional fields, then “Generate YAML”.
+- YAML includes `endpoint`, `method`, and `body` (or `query` for GET/DELETE). Empty inputs are omitted.
+- If the upstream doc changes, rerun `npm run build-spec` and restart dev server.
 
-## Notes
-- The spec parser is heuristic. If the upstream doc changes format, rerun `npm run build-spec` and spot-check.
-- The form accepts any value type; required fields are flagged. Empty values are omitted from the generated payload.
-- “Generate YAML” produces a YAML body with a comment header containing method/path; copy or download via the UI.
-
-## Tests
+## Testing
 
 ```bash
 npm test
 ```
+
+## Scripts
+- `npm run dev` – Vite dev server with HMR.
+- `npm run build` – type-check then build.
+- `npm run test` – Vitest suite (jsdom).
+- `npm run build-spec` – regenerate `src/data/skynetSpec.json` from the Skynet doc.
