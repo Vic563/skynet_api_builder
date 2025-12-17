@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,  // Fail if port 5173 is in use, don't auto-switch
     https: fs.existsSync('./skynet-api-builder.ssnc-corp.lab+3-key.pem')
       ? {
           key: fs.readFileSync('./skynet-api-builder.ssnc-corp.lab+3-key.pem'),
