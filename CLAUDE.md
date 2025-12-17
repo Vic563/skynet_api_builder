@@ -38,7 +38,7 @@ sshpass -p 'Nyc4u2me' rsync -avz --exclude='node_modules' --exclude='dist' --exc
   /Users/DT232381/code/skynet_api_builder_with_workflows victor@10.58.108.24:~/
 ```
 
-**IMPORTANT**: Always sync after making local changes, then restart the app with `pm2 restart skynet-api-builder`.
+**IMPORTANT**: Always sync after making local changes, then restart the app (see pm2 commands below).
 
 The server requires Node.js 20+ for Vite 7. Access via **https://skynet-api-builder.ssnc-corp.lab**
 
@@ -49,10 +49,12 @@ The app runs as a pm2 process and auto-starts on boot. Run these commands as roo
 ```bash
 pm2 status                      # Check status
 pm2 logs skynet-api-builder     # View logs
-pm2 restart skynet-api-builder  # Restart app (after syncing changes)
+pm2 stop skynet-api-builder && sleep 3 && pm2 start skynet-api-builder  # Restart app (after syncing changes)
 pm2 stop skynet-api-builder     # Stop app
 pm2 delete skynet-api-builder   # Remove from pm2
 ```
+
+**IMPORTANT**: Do NOT use `pm2 restart` - it starts the new process before killing the old one, causing port conflicts. Always use stop + sleep + start.
 
 ### SSL/HTTPS
 
