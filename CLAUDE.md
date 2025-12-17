@@ -89,6 +89,17 @@ HTTPS is enabled using mkcert certificates. Port 443 redirects to 5173 via iptab
 - `sdn_version` defaults to 2 (SDN2) unless doc specifies otherwise
 - For `/api/v4/sdn/arista/switch/sync_config`: `device_id` and `hostname` are mutually exclusive - if both provided, `device_id` takes priority
 
+## Git Workflow
+
+Always push to both remotes:
+```bash
+git push github main && git push workflows main
+```
+
+Remotes:
+- `github` → https://github.com/Vic563/skynet_api_builder.git
+- `workflows` → git@code.ssnc.dev:dt232381/skynet-apibuilder-with-workflow.git
+
 ## Coding Conventions
 - TypeScript strict mode; explicit types on exports
 - Functional React components with hooks
