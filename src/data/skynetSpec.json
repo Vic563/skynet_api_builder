@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-17T05:02:26.495Z",
+  "generatedAt": "2025-11-19T20:34:51.114Z",
   "endpoints": [
     {
       "id": "assign-ip-requires-security-cloud-ui",
@@ -41,6 +41,11 @@
         {
           "name": "ip",
           "description": "Optional. Assigns input IP if specified. The network the subnet is in is required",
+          "required": false
+        },
+        {
+          "name": "openshift_cluster",
+          "description": "Optional. The name of the OpenShift cluster the VM will be attached to. Used to select appropriate openshift network. Must also provide the VPC.",
           "required": false
         }
       ],
@@ -677,7 +682,7 @@
         {
           "name": "service_ports",
           "description": "Required(string). Can be a single port(e.g. \"22\"), comma-seperated string(e.g. \"22, 443\"), or range(e.g. \"22-24\").",
-          "required": false
+          "required": true
         },
         {
           "name": "request",
@@ -1339,12 +1344,12 @@
         {
           "name": "zone",
           "description": "The zone name to be re-sync'd.",
-          "required": false
+          "required": true
         },
         {
           "name": "ip",
           "description": "Ip address of endpoint member of zone. Will only sync non-protected zones.",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -1434,12 +1439,12 @@
         {
           "name": "wip",
           "description": "Optional, but one parameter is required. The WIP to get status on.",
-          "required": true
+          "required": false
         },
         {
           "name": "task_id",
           "description": "Optional, but one parameter is required. The Skynet task ID for the WIP request.",
-          "required": true
+          "required": false
         }
       ],
       "example": null
@@ -1784,7 +1789,7 @@
         {
           "name": "view",
           "description": "Requrired. BAM View to deploy associated servers",
-          "required": false
+          "required": true
         }
       ],
       "example": "{\n    \"view\": \"<name of the view>\",\n}"
@@ -2093,7 +2098,7 @@
         {
           "name": "view",
           "description": "Requrired. BAM View the Zone resides in.",
-          "required": false
+          "required": true
         },
         {
           "name": "mock",
@@ -2156,7 +2161,7 @@
         {
           "name": "zone",
           "description": "Requrired. Proteus zone name",
-          "required": false
+          "required": true
         },
         {
           "name": "create_zones",
@@ -2281,7 +2286,7 @@
         {
           "name": "dhcp_server_ips",
           "description": "a list of the DHCP server IPs",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -2309,7 +2314,7 @@
         {
           "name": "view",
           "description": "Requrired. BAM View the Zone resides in.",
-          "required": false
+          "required": true
         }
       ],
       "example": "{\n    \"fqdn\": \"<fqdn>\",\n    \"view\": \"<name of the view>\",\n}"
@@ -3272,52 +3277,52 @@
         {
           "name": "site",
           "description": "site name",
-          "required": false
+          "required": true
         },
         {
           "name": "pod",
           "description": "pod name",
-          "required": false
+          "required": true
         },
         {
           "name": "tenant",
           "description": "tenant name",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "the work flow state (code as \"ready\")",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "the work flow intent state (code as \"ready\")",
-          "required": false
+          "required": true
         },
         {
           "name": "fabric",
           "description": "either \"mgmt\" or \"cloud\"",
-          "required": false
+          "required": true
         },
         {
           "name": "vlan_name",
           "description": "the name of the vlan defintion,",
-          "required": false
+          "required": true
         },
         {
           "name": "env",
           "description": "the firewall env",
-          "required": false
+          "required": true
         },
         {
           "name": "host_type",
           "description": "internal",
-          "required": false
+          "required": true
         },
         {
           "name": "vrf",
           "description": "usually \"DC\", see the grafana boards for other VRFs",
-          "required": false
+          "required": true
         },
         {
           "name": "l2_mode",
@@ -3327,7 +3332,7 @@
         {
           "name": "dynamic_allocation",
           "description": "true or false",
-          "required": false
+          "required": true
         },
         {
           "name": "networkCIDR",
@@ -3347,12 +3352,12 @@
         {
           "name": "subnet_prefixlen",
           "description": "the size of subnet to allocate",
-          "required": false
+          "required": true
         },
         {
           "name": "reserve_ip_count",
           "description": "the number of ips to reserve",
-          "required": false
+          "required": true
         },
         {
           "name": "native",
@@ -3382,7 +3387,7 @@
         {
           "name": "properties",
           "description": "includes settings for the blocks to allocate the subnet(s) from, LTM owner id and L2 BB switches, see Grafana boards for examples",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -3430,7 +3435,7 @@
         {
           "name": "other",
           "description": "any subset of the parameters shown in the above POST section",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -3488,7 +3493,7 @@
         {
           "name": "vrf",
           "description": "the vrf name",
-          "required": false
+          "required": true
         },
         {
           "name": "sdn_version",
@@ -3498,7 +3503,7 @@
         {
           "name": "properties",
           "description": "JSON see example for syntax. `sites` and `device_type` are SDN1 parameters. Use `sdn2_profile` to define comparable parameters for SDN2 sites.",
-          "required": false
+          "required": true
         },
         {
           "name": "sdn2_profile",
@@ -3508,12 +3513,12 @@
         {
           "name": "device_types",
           "description": "A list of the Arista device types this new VRF should be built on (i.e. `lf`, `eg`). Device layer can also be included for more granularity (i.e. `dci_edge`, `leaf_compute`). This list can contain both type and layer.",
-          "required": false
+          "required": true
         },
         {
           "name": "fabric",
           "description": "The fabric associated with the device types: options are `cloud` or `mgmt`.",
-          "required": false
+          "required": true
         },
         {
           "name": "site",
@@ -3567,22 +3572,22 @@
         {
           "name": "vrf_id",
           "description": "The id of the VRF to update",
-          "required": false
+          "required": true
         },
         {
           "name": "vrf",
           "description": "The vrf name",
-          "required": false
+          "required": true
         },
         {
           "name": "sdn_version",
           "description": "Integer of the SDN version for the VRF (legacy and SDN 1.0 should be `1`, SDN 2.0 should be `2`).",
-          "required": false
+          "required": true
         },
         {
           "name": "properties",
           "description": "JSON see example for syntax. `sites` and `device_type` are SDN1 parameters. Use `sdn2_profile` to define comparable parameters for SDN2 sites.",
-          "required": false
+          "required": true
         },
         {
           "name": "sdn2_profile",
@@ -3592,12 +3597,12 @@
         {
           "name": "device_types",
           "description": "A list of the Arista device types this VRF should be built on.",
-          "required": false
+          "required": true
         },
         {
           "name": "fabric",
           "description": "The fabric associated with the device types: options are `cloud` or `mgmt`.",
-          "required": false
+          "required": true
         },
         {
           "name": "site",
@@ -3675,7 +3680,7 @@
         {
           "name": "vrf",
           "description": "the vrf to attach the subnet to. use \"DC\" in most cases. for NSX segments use \"VPC\"",
-          "required": false
+          "required": true
         },
         {
           "name": "sdn_version",
@@ -3685,22 +3690,22 @@
         {
           "name": "tenant",
           "description": "the tenant name",
-          "required": false
+          "required": true
         },
         {
           "name": "networkCIDR",
           "description": "cidr",
-          "required": false
+          "required": true
         },
         {
           "name": "env",
           "description": "firewall env the subnet is in",
-          "required": false
+          "required": true
         },
         {
           "name": "host_type",
           "description": "look at similar subnets for examples. common ones are \"internal\", \"internet\", \"client\"",
-          "required": false
+          "required": true
         },
         {
           "name": "vlan",
@@ -3710,7 +3715,7 @@
         {
           "name": "description",
           "description": "comment on the purpose of the subnet",
-          "required": false
+          "required": true
         },
         {
           "name": "def_id",
@@ -3725,7 +3730,7 @@
         {
           "name": "add_to_ipam",
           "description": "boolean flag to add the subnet to IPAM systems",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -3858,17 +3863,37 @@
       "params": [
         {
           "name": "vlan_definition_id",
-          "description": "Optional. The VLAN definition ID to retrieve VLAN information for.",
+          "description": "Optional. The VLAN definition ID to retrieve VLAN information for. If provided, all of the following filters will be ignored.",
+          "required": false
+        },
+        {
+          "name": "site",
+          "description": "Optional. The site to retrieve VLAN information for. This field needs to be an exact match. Required if `vlan_definition_id` is not provided.",
           "required": false
         },
         {
           "name": "vlan_name",
           "description": "Optional. The VLAN name to retrieve simplified list of VLANs. This field can work with a partial match, the exact name of the vlan is not required.",
-          "required": true
+          "required": false
         },
         {
-          "name": "site",
-          "description": "Optional. The site to retrieve VLAN information for. This field needs to be an exact match.",
+          "name": "pod",
+          "description": "Optional. The pod to retrieve VLAN information for. This field needs to be an exact match.",
+          "required": false
+        },
+        {
+          "name": "host_type",
+          "description": "Optional. The host type to filter VLANs by. This field needs to be an exact match.",
+          "required": false
+        },
+        {
+          "name": "environment",
+          "description": "Optional. The environment to filter VLANs by. This field needs to be an exact match.",
+          "required": false
+        },
+        {
+          "name": "l2",
+          "description": "Optional. Boolean `true` or `false`. If `true`, will only return `L2_ONLY` (layer 2) VLANs",
           "required": false
         }
       ],
@@ -4735,7 +4760,7 @@
         {
           "name": "maintenance_po_number",
           "description": "Device's maintenance PO number associated with the contract",
-          "required": false
+          "required": true
         },
         {
           "name": "maintenance_device_age",
@@ -4836,7 +4861,7 @@
         {
           "name": "maintenance_po_number",
           "description": "Device's maintenance PO number associated with the contract",
-          "required": false
+          "required": true
         },
         {
           "name": "maintenance_device_age",
@@ -8578,42 +8603,42 @@
         {
           "name": "site",
           "description": "the DC site",
-          "required": false
+          "required": true
         },
         {
           "name": "pod",
           "description": "the pod containing the VCenter: p01, p02, etc",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the SDN object name of the VCenter",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "vc_hostname",
           "description": "the fully qualified hostname of the VCenter",
-          "required": false
+          "required": true
         },
         {
           "name": "vc_datacenter",
           "description": "the VCenter datacenter name",
-          "required": false
+          "required": true
         },
         {
           "name": "vpc_suffix",
           "description": "the suffix used in creating VPC objects (e.g. kaop1d1, viep01)",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -8731,37 +8756,37 @@
         {
           "name": "site",
           "description": "the DC site",
-          "required": false
+          "required": true
         },
         {
           "name": "pod",
           "description": "the pod containing the VCenter: p01, p02, etc",
-          "required": false
+          "required": true
         },
         {
           "name": "vcenter",
           "description": "the VCenter SDN object name",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the SDN object name of the cluster: e.g. Cluster A",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "cluster",
           "description": "the VCenter cluster name/id",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -8857,42 +8882,42 @@
         {
           "name": "site",
           "description": "the DC site",
-          "required": false
+          "required": true
         },
         {
           "name": "pod",
           "description": "the pod containing the VCenter: p01, p02, etc",
-          "required": false
+          "required": true
         },
         {
           "name": "vcenter",
           "description": "the VCenter SDN object name",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the SDN object name of the datastore: e.g. Datastore VM1",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "datastore",
           "description": "the VCenter datastore name/id",
-          "required": false
+          "required": true
         },
         {
           "name": "datastore_type",
           "description": "allowed values: 'vm' for VMs, 'cl' for content libraries",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -8994,32 +9019,32 @@
         {
           "name": "vcenter_cluster_id",
           "description": "the object ID of the VCenter cluster. Use grafana board to identify",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the name of the SDN object name of the esxi host",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "cabinet_id",
           "description": "the object ID of the cabinet. Use grafana board to identify",
-          "required": false
+          "required": true
         },
         {
           "name": "vc_esxi_host",
           "description": "the VCenter host identifier",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -9124,42 +9149,42 @@
         {
           "name": "site",
           "description": "the DC site",
-          "required": false
+          "required": true
         },
         {
           "name": "pod",
           "description": "the pod containing the NSX: p01, p02, etc",
-          "required": false
+          "required": true
         },
         {
           "name": "vcenter",
           "description": "the VCenter SDN object name",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the SDN object name of the NSX",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "nsx_hostname",
           "description": "the fully qualified hostname of the NSX",
-          "required": false
+          "required": true
         },
         {
           "name": "nsx_ip",
           "description": "the NSX IP",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -9261,22 +9286,22 @@
         {
           "name": "object_name",
           "description": "the SDN object name of the site",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "descr",
           "description": "a description for the site",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -9369,27 +9394,27 @@
         {
           "name": "site",
           "description": "the site name",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the SDN object name of the pod",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "descr",
           "description": "a description for the pod",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -9483,27 +9508,27 @@
         {
           "name": "site",
           "description": "the site name",
-          "required": false
+          "required": true
         },
         {
           "name": "pod",
           "description": "the pod containing the cabinet",
-          "required": false
+          "required": true
         },
         {
           "name": "object_name",
           "description": "the SDN object name of the cabinet",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         },
         {
           "name": "wf_intent_state",
           "description": "hardcode 'ready' as no current workflow exists",
-          "required": false
+          "required": true
         }
       ],
       "example": {
@@ -10272,6 +10297,463 @@
         },
         "device_pod": "p01",
         "device_config_id": 112
+      }
+    },
+    {
+      "id": "list-openshift-cluster-groups-requires-security-network-openshift-cluster-admin",
+      "title": "List Openshift Cluster Groups (Requires Security: NETWORK, OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn_object/openshift_cluster_group",
+      "params": [],
+      "example": null
+    },
+    {
+      "id": "get-openshift-cluster-group-by-id-requires-security-network-openshift-cluster-admin",
+      "title": "Get Openshift Cluster Group by ID (Requires Security: NETWORK, OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn_object/openshift_cluster_group/{object_id}",
+      "params": [],
+      "example": {
+        "wf_intent_state": "ready",
+        "object_name": "wc2az1d1",
+        "parent_id": 14806,
+        "wf_build_retries": null,
+        "wf_last_processed": null,
+        "wf_enabled": true,
+        "wf_state": "ready",
+        "object_type": "openshift_cluster_group",
+        "object_id": 15099,
+        "wf_dependent_resource": null,
+        "wf_processing": null,
+        "wf_created_at": "2025-10-03 15:52:16Z",
+        "name": "wc2az1d1",
+        "members": [
+          {
+            "object_id": 15113,
+            "cluster": "ocp-wc2az1d1c1.ssnc-corp.cloud"
+          },
+          {
+            "object_id": 15119,
+            "cluster": "ocp-wc2az1d1c2.ssnc-corp.cloud"
+          }
+        ]
+      }
+    },
+    {
+      "id": "create-openshift-cluster-group-requires-security-openshift-cluster-admin",
+      "title": "Create Openshift Cluster Group (Requires Security: OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "POST",
+      "path": "/api/v4/sdn_object/openshift_cluster_group",
+      "params": [
+        {
+          "name": "site",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "openshift_cluster_group",
+          "description": "string",
+          "required": true
+        }
+      ],
+      "example": {
+        "site": "wc2",
+        "openshift_cluster_group": "wc2az1d1"
+      }
+    },
+    {
+      "id": "delete-openshift-cluster-group-requires-security-openshift-cluster-admin",
+      "title": "Delete Openshift Cluster Group (Requires Security: OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "DELETE",
+      "path": "/api/v4/sdn_object/openshift_cluster_group/{object_id}",
+      "params": [],
+      "example": {
+        "status_code": 200,
+        "object_id": 15099,
+        "status_message": "successfully deleted openshift_cluster_group object_id 15099"
+      }
+    },
+    {
+      "id": "list-openshift-clusters-requires-security-network-openshift-cluster-admin",
+      "title": "List Openshift Clusters (Requires Security: NETWORK, OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn_object/openshift_cluster",
+      "params": [],
+      "example": null
+    },
+    {
+      "id": "get-openshift-cluster-by-id-requires-security-network-openshift-cluster-admin",
+      "title": "Get Openshift Cluster by ID (Requires Security: NETWORK, OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn_object/openshift_cluster/{object_id}",
+      "params": [],
+      "example": null
+    },
+    {
+      "id": "create-openshift-cluster-requires-security-openshift-cluster-admin",
+      "title": "Create Openshift Cluster (Requires Security: OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "POST",
+      "path": "/api/v4/sdn_object/openshift_cluster",
+      "params": [
+        {
+          "name": "site",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "pod",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "object_name",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "openshift_cluster",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "openshift_cluster_group",
+          "description": "string",
+          "required": true
+        }
+      ],
+      "example": {
+        "site": "wc2",
+        "pod": "p01",
+        "object_name": "ocp-wc2az1d1c1",
+        "openshift_cluster": "ocp-wc2az1d1c1.ssnc-corp.cloud",
+        "openshift_cluster_group": "wc2az1d1"
+      }
+    },
+    {
+      "id": "delete-openshift-cluster-requires-security-openshift-cluster-admin",
+      "title": "Delete Openshift Cluster (Requires Security: OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "DELETE",
+      "path": "/api/v4/sdn_object/openshift_cluster/{object_id}",
+      "params": [],
+      "example": {
+        "status_code": 200,
+        "object_id": 15254,
+        "status_message": "successfully deleted openshift_cluster object_id 15254"
+      }
+    },
+    {
+      "id": "get-openshift-tenant-vpc-requires-security-network",
+      "title": "Get Openshift Tenant VPC (Requires Security: NETWORK)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/cloud/tenant_vpc",
+      "params": [
+        {
+          "name": "tenant_vpc",
+          "description": "string",
+          "required": false
+        },
+        {
+          "name": "vpc_environment",
+          "description": "string",
+          "required": false
+        }
+      ],
+      "example": {
+        "object_id": 15149,
+        "vpc_environment": "openshift",
+        "tenant": "ssnc",
+        "site": "wc2",
+        "pod": null,
+        "tenant_vpc": "ssnc-wc2az1d1",
+        "vpc_type": "infra",
+        "vcenter": null,
+        "wf_state": "ready",
+        "wf_intent_state": "ready",
+        "default_vpc": "False",
+        "description": "WC2 Openshift Tenant VPC",
+        "children": [
+          {
+            "object_id": 15275,
+            "object_name": "vlan206-ssnc-wc2az1d1-vm-100-97-16-0-21_15260",
+            "object_type": "openshift_networkattachment",
+            "wf_state": "ready",
+            "wf_intent_state": "ready"
+          },
+          {
+            "object_id": 15269,
+            "object_name": "vlan204-ssnc-wc2az1d1-vm-100-97-0-0-21_15260",
+            "object_type": "openshift_networkattachment",
+            "wf_state": "provisioned",
+            "wf_intent_state": "ready"
+          },
+          {
+            "object_id": 15266,
+            "object_name": "vlan205-ssnc-wc2az1d1-vm-100-97-8-0-21_15260",
+            "object_type": "openshift_networkattachment",
+            "wf_state": "provisioned",
+            "wf_intent_state": "ready"
+          },
+          {
+            "object_id": 15263,
+            "object_name": "ocp-wc2az1d1c1.ssnc-corp.cloud:ssnc-wc2az1d1",
+            "object_type": "openshift_namespace",
+            "wf_state": "ready",
+            "wf_intent_state": "ready"
+          }
+        ]
+      }
+    },
+    {
+      "id": "create-openshift-cluster-tenant-vpc-requires-security-network",
+      "title": "Create Openshift Cluster Tenant VPC (Requires Security: NETWORK)",
+      "section": "Cloud Functions",
+      "method": "POST",
+      "path": "/api/v4/cloud/tenant_vpc",
+      "params": [
+        {
+          "name": "tenant",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "tenant_vpc",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "vpc_type",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "openshift_cluster_group",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "site",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "openshift_policy_enabled",
+          "description": "bool",
+          "required": true
+        }
+      ],
+      "example": {
+        "tenant_vpc": "ssnc-wc2az1d1",
+        "tenant": "ssnc",
+        "vpc_type": "infra",
+        "openshift_cluster_group": "wc2az1d1",
+        "site": "wc2",
+        "description": "WC2 Openshift Tenant VPC",
+        "openshift_policy_enabled": true
+      }
+    },
+    {
+      "id": "list-openshift-tenant-vpc-subnet-attachments-requires-security-network-openshift-cluster-admin",
+      "title": "List Openshift Tenant VPC Subnet Attachments (Requires Security: NETWORK, OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn_object/openshift_networkattachment",
+      "params": [],
+      "example": null
+    },
+    {
+      "id": "get-openshift-tenant-vpc-subnet-attachment-by-id-requires-security-network-openshift-cluster-admin",
+      "title": "Get Openshift Tenant VPC Subnet Attachment by ID (Requires Security: NETWORK, OPENSHIFT\\_CLUSTER\\_ADMIN)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn_object/openshift_networkattachment/{object_id}",
+      "params": [],
+      "example": null
+    },
+    {
+      "id": "attach-openshift-tenant-vpc-to-subnet-requires-security-network",
+      "title": "Attach Openshift Tenant VPC to Subnet (Requires Security: NETWORK)",
+      "section": "Cloud Functions",
+      "method": "POST",
+      "path": "/api/v4/sdn_object/segment_attachment",
+      "params": [
+        {
+          "name": "openshift_cluster_group",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "openshift_cluster",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "vpc",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "subnet_id",
+          "description": "int",
+          "required": true
+        },
+        {
+          "name": "subnet_cidr",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "vlan_id",
+          "description": "int",
+          "required": true
+        },
+        {
+          "name": "object_name",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "pod",
+          "description": "string",
+          "required": true
+        },
+        {
+          "name": "site",
+          "description": "string",
+          "required": true
+        }
+      ],
+      "example": {
+        "openshift_cluster_group": "wc2az1d1",
+        "vpc": "ssnc-wc2az1d1",
+        "subnet_id": 2106,
+        "site": "lb3",
+        "vlan_id": 206,
+        "subnet_cidr": "100.97.16.0/21",
+        "object_name": "vlan206-ssnc-wc2az1d1-vm-100-97-16-0-21"
+      }
+    },
+    {
+      "id": "get-openshift-vm-default-labels",
+      "title": "Get Openshift VM Default Labels",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn/openshift/default_vm_labels/{tenant}",
+      "params": [],
+      "example": {
+        "tenant": "ssnc",
+        "baseline_labels": [
+          {
+            "internet": "true"
+          },
+          {
+            "network-services": "true"
+          },
+          {
+            "all-internal-nets": "true"
+          }
+        ],
+        "any_server_labels": [
+          {
+            "birthright": "any_sdn_server"
+          }
+        ],
+        "message": "Default VM labels retrieved successfully"
+      }
+    },
+    {
+      "id": "get-skynet-task-information-requires-security-network-server-admin-cloud-ui",
+      "title": "Get Skynet Task Information (Requires Security: NETWORK, SERVER\\_ADMIN, CLOUD\\_UI)",
+      "section": "Cloud Functions",
+      "method": "GET",
+      "path": "/api/v4/sdn/task/{task_id}/resurrect",
+      "params": [],
+      "example": {
+        "task_id": 3630311,
+        "task_name": "Create OpenShift Network Attachment",
+        "task_type": "OpenshiftNetworkAttachmentProvision",
+        "task_created_at": "2025-10-22 14:33:47Z",
+        "task_processed_at": "2025-10-22 14:34:01Z",
+        "task_state": "processed",
+        "task_retries": 0,
+        "task_request": {
+          "object_id": 15275,
+          "cluster_name": "ocp-lb3netauto",
+          "cluster_fqdn": "ocp-lb3netauto.ssnc-corp.lab",
+          "name": "vlan206-ssnc-lb3p1d00-vm-100-97-16-0-21",
+          "namespace": "default",
+          "vpc": "ssnc-lb3-netauto1",
+          "vlan_id": 206,
+          "subnet": "100.97.16.0/21",
+          "additional_labels": {
+            "segment_name": "vlan206-ssnc-lb3p1d00-vm-100-97-16-0-21",
+            "tenant_vpc": "ssnc-lb3-netauto1",
+            "tenant": "ssnc"
+          }
+        },
+        "task_response": "network attachment definition vlan206-ssnc-lb3p1d00-vm-100-97-16-0-21 built successfully on cluster ocp-lb3netauto"
+      }
+    },
+    {
+      "id": "resurrect-skynet-task-requires-security-network-server-admin-cloud-ui",
+      "title": "Resurrect Skynet Task (Requires Security: NETWORK, SERVER\\_ADMIN, CLOUD\\_UI)",
+      "section": "Cloud Functions",
+      "method": "POST",
+      "path": "/api/v4/sdn/task/{task_id}/resurrect",
+      "params": [],
+      "example": {
+        "task_id": 3632591,
+        "task_name": "ocp-lb3netauto:ssnc-lb3-netauto1 policy",
+        "task_type": "RuleDeployer",
+        "task_created_at": "2025-10-22 18:53:53Z",
+        "task_processed_at": null,
+        "task_state": "new",
+        "task_retries": 0,
+        "task_request": {
+          "nsx_env": null,
+          "firewall": "ocp-lb3netauto:ssnc-lb3-netauto1",
+          "firewall_id": 65,
+          "firewall_type": "openshift"
+        },
+        "task_response": null
+      }
+    },
+    {
+      "id": "delete-skynet-task-requires-security-network-server-admin-cloud-ui",
+      "title": "Delete Skynet Task (Requires Security: NETWORK, SERVER\\_ADMIN, CLOUD\\_UI)",
+      "section": "Cloud Functions",
+      "method": "DELETE",
+      "path": "/api/v4/sdn/task/{task_id}/resurrect",
+      "params": [],
+      "example": {
+        "task_id": 3541808,
+        "task_name": "ocp-lb3netauto.ssnc-corp.lab:ssnc-lb3-netauto1",
+        "task_type": "OpenshiftNamespaceProvision",
+        "task_created_at": "2025-10-14 15:51:52Z",
+        "task_processed_at": null,
+        "task_state": "not_processed",
+        "task_retries": 0,
+        "task_request": {
+          "object_id": 15263,
+          "cluster_group": "os-lb3-netauto",
+          "cluster_name": "ocp-lb3netauto.ssnc-corp.lab",
+          "cluster_fqdn": "ocp-lb3netauto.ssnc-corp.lab",
+          "namespace": "ssnc-lb3-netauto1"
+        },
+        "task_response": null
       }
     }
   ]

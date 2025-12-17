@@ -46,7 +46,7 @@ function parse(docText) {
       }
       const chunk = lines.slice(start, end);
       const { method, path: apiPath } = extractMethodAndPath(chunk);
-      const params = extractParams(chunk);
+      const params = extractParams(chunk, method, nameRaw);
       const example = extractExample(chunk);
       endpoints.push({
         id: slugify(nameRaw),
@@ -73,7 +73,7 @@ function extractMethodAndPath(chunkLines) {
   return { method: null, path: null };
 }
 
-function extractParams(chunkLines) {
+function extractParams(chunkLines, method, endpoint) {
   const params = [];
   for (let idx = 0; idx < chunkLines.length; idx++) {
     if (/^\| *Parameter\s*\|/i.test(chunkLines[idx])) {
@@ -86,7 +86,51 @@ function extractParams(chunkLines) {
         if (cells.length < 2) continue;
         const name = sanitizeParamName(cells[0]);
         const description = cells[1];
-        const required = /Required\./i.test(description);
+        const descLower = description.toLowerCase();
+
+        // Determine if parameter is required based on description
+        let required = false;
+
+        // If starts with "optional", it's optional
+        if (descLower.startsWith('optional')) {
+          required = false;
+        }
+        // If contains "required if" or "required when", it's conditionally required (treat as optional)
+        else if (/required\s+if\b/i.test(description) || /required\s+when\b/i.test(description)) {
+          required = false;
+        }
+        // If starts with "Required." (with period) or "Required(" (with parenthesis), it's truly required
+        else if (/^required[.(]/i.test(description.trim())) {
+          required = true;
+        }
+        // HEURISTIC: If no marker exists, make educated guess based on context
+        else if (!descLower.startsWith('optional') && !descLower.startsWith('required')) {
+          // For POST/PUT endpoints (creation/update), assume required unless description suggests otherwise
+          if (method === 'POST' || method === 'PUT') {
+            // Check for patterns that suggest optional
+            const optionalIndicators = [
+              /\bdefault/i,
+              /\bnull\b/i,
+              /\boptional\b/i,
+              /\bif\s+\w+/i,  // "if specified", "if provided", etc.
+              /\bleft\s+out\b/i,
+              /\bcan\s+be\s+left/i,
+              /\bcan\s+be\s+null/i,
+              /\bmay\s+be\b/i
+            ];
+
+            const hasOptionalIndicator = optionalIndicators.some(pattern => pattern.test(description));
+            required = !hasOptionalIndicator;
+          } else {
+            // For GET/DELETE, default to optional
+            required = false;
+          }
+        }
+        // Otherwise, default to optional
+        else {
+          required = false;
+        }
+
         params.push({ name, description, required });
       }
     }
